@@ -49,11 +49,14 @@ image_array_conv = np.rint(255 * (image_array_conv_min / np.max(image_array_conv
 image_final_array = image_array + image_array_conv
 
 image_final_array_min = image_final_array - np.min(image_final_array)
-image_final_array = np.rint(255 * (image_final_array_min / np.max(image_final_array_min)))
+image_final_array = np.rint(
+    255 * (image_final_array_min / np.max(image_final_array_min))
+)
 
 print(np.max(image_final_array))
 print(np.min(image_final_array))
 
-image_final = Image.fromarray(image_array_conv)
+image_final = Image.fromarray(image_final_array)
 
 image_final.show()
+image.show()
