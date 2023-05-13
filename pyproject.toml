@@ -12,8 +12,14 @@ polars = "^0.17.13"
 plotly = "^5.14.1"
 numpy = "^1.24.3"
 pillow = "^9.5.0"
+taskipy = "^1.10.4"
+streamlit = "^1.22.0"
+streamlit-toggle-switch = "^1.0.2"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.taskipy.tasks]
+dashboard = "poetry run streamlit run convolucao_laplaciano/dashboard/Convolucao.py"
