@@ -89,7 +89,7 @@ with col_2:
         )
     )
     sigma = float(
-        st.number_input("Alpha", min_value=0.1, max_value=2.0, value=1.0, step=0.01)
+        st.number_input("Alpha", min_value=0.1, max_value=5.0, value=2.0, step=0.01)
     )
     padding = (size - 1) // 2
 
@@ -130,9 +130,9 @@ image_array_conv_gauss = np.rint(
 
 # st.table(image_array_conv)
 
-image_final_conv = Image.fromarray(image_array_conv_gauss)
+image_final_conv_lua_gauss = Image.fromarray(image_array_conv_gauss)
 
-st.image(image_final_conv.convert("L"))
+st.image(image_final_conv_lua_gauss.convert("L"))
 
 # endregion
 
@@ -209,7 +209,7 @@ st.image(image_final.convert("L"))
 # region lua laplace
 
 # TODO: Use a better image, without salt and pepper
-image = Image.open("./data/Lua1_gray.png")
+image = Image.fromarray(image_array_conv_gauss)
 
 image = image.convert("L")
 
