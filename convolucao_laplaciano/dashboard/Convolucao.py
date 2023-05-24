@@ -19,9 +19,13 @@ st.markdown("#### Kernel")
 col_1, col_2 = st.columns(2)
 
 with col_2:
-    size = st.number_input("Tamanho Kernel", min_value=3, max_value=None, value=3, step=2)
+    size = st.number_input(
+        "Tamanho Kernel", min_value=3, max_value=None, value=3, step=2
+    )
+    is_const = toggle("Constante")
 
-kernel = np.ones((int(size), int(size))) / (int(size) ** 2)
+divisor = 9 if is_const else (int(size) ** 2)
+kernel = np.ones((int(size), int(size))) / divisor
 
 with col_1:
     st.write(kernel)
@@ -33,9 +37,9 @@ image_arrayb = np.pad(image_array, ((int(size) - 1) // 2), "constant")
 image_array_conv = image_array.copy()
 
 
-def f(i: int, padding: int):
+def f(i: int, padding: int, image_arrayb: np.ndarray):
     pixels = list()
-    for j, px in enumerate(image_arrayb[i][padding:-padding]):
+    for j, _ in enumerate(image_arrayb[i][padding:-padding]):
         soma = 0
         for desloc_i in range(3):
             for desloc_j in range(3):
@@ -43,12 +47,13 @@ def f(i: int, padding: int):
                     kernel[desloc_i][desloc_j]
                     * image_arrayb[i - 1 + desloc_i][j - 1 + desloc_j]
                 )
-        pixels.append(px + soma)
+        pixels.append(soma)
     return np.array(pixels)
 
+
 image_array_conv = list()
-for i, _ in enumerate(image_arrayb[((int(size) - 1) // 2):-((int(size) - 1) // 2)]):
-    result = f(i, ((int(size) - 1) // 2))
+for i, _ in enumerate(image_arrayb[((int(size) - 1) // 2) : -((int(size) - 1) // 2)]):
+    result = f(i + ((int(size) - 1) // 2), ((int(size) - 1) // 2), image_arrayb)
     result = np.array(result)
     image_array_conv.append(result)
 image_array_conv = np.array(image_array_conv)
@@ -57,7 +62,6 @@ image_array_conv_min = image_array_conv - np.min(image_array_conv)
 image_array_conv = np.rint(255 * (image_array_conv_min / np.max(image_array_conv_min)))
 
 image_final_conv = Image.fromarray(image_array_conv)
-
 
 st.image(image_final_conv.convert("L"))
 
@@ -102,7 +106,7 @@ image_array_conv = image_array.copy()
 
 image_array_conv = list()
 for i, _ in enumerate(image_arrayb[1:-1]):
-    result = f(i, 1)
+    result = f(i + 1, 1, image_arrayb)
     result = np.array(result)
     image_array_conv.append(result)
 image_array_conv = np.array(image_array_conv)
@@ -121,7 +125,6 @@ st.write(np.max(image_final_array))
 st.write(np.min(image_final_array))
 
 image_final_conv = Image.fromarray(image_array_conv)
-
 image_final = Image.fromarray(image_final_array)
 
 st.image(image_final_conv.convert("L"))
