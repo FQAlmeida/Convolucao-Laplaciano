@@ -8,7 +8,7 @@ from math import pi, e
 st.title("Convolução Laplaciano")
 
 
-image = Image.open("./data/Lua1_gray.jpg")
+image = Image.open("./data/Lua1_gray.png")
 
 image = image.convert("L")
 
@@ -209,7 +209,7 @@ st.image(image_final.convert("L"))
 # region lua laplace
 
 # TODO: Use a better image, without salt and pepper
-image = Image.open("./data/Lua1_gray.jpg")
+image = Image.open("./data/Lua1_gray.png")
 
 image = image.convert("L")
 
