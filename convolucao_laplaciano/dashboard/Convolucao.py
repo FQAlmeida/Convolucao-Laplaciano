@@ -85,11 +85,11 @@ col_1, col_2 = st.columns(2)
 with col_2:
     size = int(
         st.number_input(
-            "Tamanho Kernel Gauss", min_value=3, max_value=None, value=3, step=2
+            "Tamanho Kernel Gauss", min_value=3, max_value=None, value=5, step=2
         )
     )
     sigma = float(
-        st.number_input("Alpha", min_value=0.1, max_value=1.0, value=0.6, step=0.01)
+        st.number_input("Alpha", min_value=0.1, max_value=2.0, value=1.0, step=0.01)
     )
     padding = (size - 1) // 2
 
@@ -205,3 +205,75 @@ st.image(image_final.convert("L"))
 
 # image_final.show()
 # image.show()
+
+# region lua laplace
+
+# TODO: Use a better image, without salt and pepper
+image = Image.open("./data/Lua1_gray.jpg")
+
+image = image.convert("L")
+
+st.markdown("#### Imagem Original")
+st.image(image)
+
+st.markdown("#### Kernel")
+
+col_1, col_2 = st.columns(2)
+
+with col_2:
+    c = 1 if toggle("C Lua", label_after=True) else -1
+    st.write(f"C: {c}")
+    dev_step = toggle("Option Lua", label_after=True)
+
+kernel_4 = [
+    [+0, +1, +0],
+    [+1, -4, +1],
+    [+0, +1, +0],
+]
+
+kernel_8 = [
+    [+1, +1, +1],
+    [+1, -8, +1],
+    [+1, +1, +1],
+]
+
+kernel = c * np.array(kernel_4 if dev_step else kernel_8)
+
+with col_1:
+    st.write(kernel)
+
+
+image_array = np.array(image)
+image_arrayb = np.pad(image_array, 1, "constant")
+
+image_array_conv = image_array.copy()
+
+prog_bar_eye = st.progress(0, "Conv Lua Lap")
+image_array_conv = list()
+for i, _ in enumerate(image_arrayb[1:-1]):
+    prog_bar_eye.progress(i / len(image_arrayb[1:-1]))
+    result = f(i + 1, 1, image_arrayb, kernel)
+    result = np.array(result)
+    image_array_conv.append(result)
+image_array_conv = np.array(image_array_conv)
+
+image_final_array = image_array + image_array_conv
+
+image_array_conv_min = image_array_conv - np.min(image_array_conv)
+image_array_conv = np.rint(255 * (image_array_conv_min / np.max(image_array_conv_min)))
+
+image_final_array_min = image_final_array - np.min(image_final_array)
+image_final_array = np.rint(
+    255 * (image_final_array_min / np.max(image_final_array_min))
+)
+
+# st.write(np.max(image_final_array))
+# st.write(np.min(image_final_array))
+
+image_final_conv = Image.fromarray(image_array_conv)
+image_final = Image.fromarray(image_final_array)
+
+st.image(image_final_conv.convert("L"))
+st.image(image_final.convert("L"))
+
+# endregion
