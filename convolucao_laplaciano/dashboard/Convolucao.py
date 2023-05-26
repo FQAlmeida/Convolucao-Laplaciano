@@ -52,6 +52,7 @@ def f(i: int, padding: int, image_arrayb: np.ndarray, kernel: np.ndarray):
     return np.array(pixels)
 
 
+@st.cache_data
 def conv(image_array: np.ndarray, kernel: np.ndarray):
     padding = (len(kernel) - 1) // 2
     image_arrayb = np.pad(image_array, padding, "edge")
