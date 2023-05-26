@@ -157,7 +157,7 @@ with col_1:
 image_array = np.array(image)
 image_array_conv = conv(image_array, kernel)
 
-image_final_array = image_array + image_array_conv
+image_final_array = np.add(image_array, image_array_conv)
 
 image_array_conv_min = image_array_conv - np.min(image_array_conv)
 image_array_conv = np.rint(255 * (image_array_conv_min / np.max(image_array_conv_min)))
