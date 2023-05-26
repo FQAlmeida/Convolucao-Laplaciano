@@ -1,7 +1,7 @@
 import numpy as np
 import streamlit as st
 from PIL import Image
-from streamlit_toggle import st_toggle_switch as toggle
+import streamlit_toggle as toggle
 from convolucao_laplaciano.dashboard.commom import convolution
 
 st.title("Convolução Laplaciano")
@@ -18,8 +18,8 @@ st.markdown("#### Kernel")
 col_1, col_2 = st.columns(2)
 
 with col_2:
-    c = 1 if toggle("C", label_after=True, default_value=True) else -1
-    dev_step = toggle("Option", label_after=True, default_value=True)
+    c = 1 if toggle.st_toggle_switch("C", label_after=True, default_value=True) else -1
+    dev_step = toggle.st_toggle_switch("Option", label_after=True, default_value=True)
 
 kernel_4 = [
     [+0, +1, +0],

@@ -1,7 +1,7 @@
 import numpy as np
 import streamlit as st
 from PIL import Image
-from streamlit_toggle import st_toggle_switch as toggle
+import streamlit_toggle as toggle
 
 from convolucao_laplaciano.dashboard.commom import convolution, gauss
 
@@ -23,7 +23,7 @@ with col_2:
         st.number_input("Tamanho Kernel", min_value=3, max_value=None, value=3, step=2)
     )
     padding = (size - 1) // 2
-    is_const = toggle("Constante", label_after=True)
+    is_const = toggle.st_toggle_switch("Constante", label_after=True)
 
 divisor = 9 if is_const else (size**2)
 kernel = np.ones((size, size)) / divisor
@@ -69,11 +69,7 @@ grid_lin_space = np.linspace(
     -((size - 1) // 2), ((size - 1) // 2), size, dtype=np.int64
 )
 kernel_x, kernel_y = np.meshgrid(grid_lin_space, grid_lin_space)
-kernel = gauss(
-    kernel_x,
-    kernel_y,
-    sigma
-)
+kernel = gauss(kernel_x, kernel_y, sigma)
 
 with col_1:
     st.write(kernel)
