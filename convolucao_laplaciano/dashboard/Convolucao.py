@@ -1,10 +1,11 @@
-import streamlit as st
-from streamlit_toggle import st_toggle_switch as toggle
-import numpy as np
-from PIL import Image
-from multiprocessing.pool import ThreadPool as Pool
-from math import pi, e
 from functools import partial
+from math import e, pi
+from multiprocessing.pool import ThreadPool as Pool
+
+import numpy as np
+import streamlit as st
+from PIL import Image
+from streamlit_toggle import st_toggle_switch as toggle
 
 st.title("Convolução Laplaciano")
 
@@ -31,7 +32,6 @@ kernel = np.ones((size, size)) / divisor
 
 with col_1:
     st.write(kernel)
-
 
 image_array = np.array(image)
 
@@ -92,7 +92,7 @@ with col_2:
         )
     )
     sigma = float(
-        st.number_input("Alpha", min_value=0.1, max_value=5.0, value=2.0, step=0.01)
+        st.number_input("Sigma", min_value=0.1, max_value=5.0, value=2.0, step=0.01)
     )
     padding = (size - 1) // 2
 
