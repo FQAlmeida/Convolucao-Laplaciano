@@ -6,9 +6,7 @@ from multiprocessing.pool import ThreadPool as Pool
 from math import pi, e
 from functools import partial
 
-
 st.title("Convolução Laplaciano")
-
 
 image = Image.open("./data/Lua1_gray.png")
 
@@ -174,4 +172,3 @@ image_final = Image.fromarray(image_final_array)
 
 st.image(image_final_conv.convert("L"))
 st.image(image_final.convert("L"))
-
