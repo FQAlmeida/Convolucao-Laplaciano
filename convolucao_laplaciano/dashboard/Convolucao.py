@@ -170,6 +170,8 @@ image_final_array = np.rint(
 
 image_final_conv = Image.fromarray(image_array_conv)
 image_final = Image.fromarray(image_final_array)
-
-st.image(image_final_conv.convert("L"))
-st.image(image_final.convert("L"))
+col1, col2 = st.columns(2)
+with col1:
+    st.image(image_final_conv.convert("L"))
+with col2:
+    st.image(image_final.convert("L"))
