@@ -14,7 +14,7 @@ image = image.convert("L")
 st.markdown("#### Imagem Original")
 st.image(image)
 
-st.markdown("#### Kernel")
+st.markdown("#### Kernel Média")
 
 col_1, col_2 = st.columns(2)
 
@@ -46,11 +46,8 @@ image_array_conv = np.rint(255 * (image_array_conv_min / np.max(image_array_conv
 
 image_final_conv = Image.fromarray(image_array_conv)
 
-st.image(image_final_conv.convert("L"))
-
-
 # region gaussiano
-
+st.markdown("#### Kernel Gaussiano")
 
 col_1, col_2 = st.columns(2)
 
@@ -82,6 +79,12 @@ image_array_conv_gauss = np.rint(
 
 image_final_conv_lua_gauss = Image.fromarray(image_array_conv_gauss)
 
-st.image(image_final_conv_lua_gauss.convert("L"))
+col1, col2 = st.columns(2)
+with col1:
+    st.write("Filtro de Média")
+    st.image(image_final_conv.convert("L"))
+with col2:
+    st.write("Filtro Gaussiano")
+    st.image(image_final_conv_lua_gauss.convert("L"))
 
 # endregion
