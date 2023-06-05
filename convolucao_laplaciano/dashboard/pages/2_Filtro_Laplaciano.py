@@ -4,7 +4,7 @@ from PIL import Image
 import streamlit_toggle as toggle
 from convolucao_laplaciano.dashboard.commom import convolution
 
-st.title("Convolução Laplaciano")
+st.title("Filtros Passa Alto")
 
 image = Image.open("./data/11_test.png")
 

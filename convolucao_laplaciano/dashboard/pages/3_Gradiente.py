@@ -5,7 +5,7 @@ from math import pi
 from PIL import Image
 import numpy as np
 
-st.title("Convolução Laplaciano")
+st.title("Filtros de Gradiente")
 
 st.markdown("#### Imagens Originais")
 col1, col2 = st.columns(2)

@@ -5,7 +5,7 @@ import streamlit_toggle as toggle
 
 from convolucao_laplaciano.dashboard.commom import convolution, gauss
 
-st.title("Convolução Laplaciano")
+st.title("Filtros Passa Baixo")
 
 image = Image.open("./data/Lua1_gray.png")
 
